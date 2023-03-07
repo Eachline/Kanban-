@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Register from 'components/Register';
 import ButtonIcon from 'components/ButtonIcon';
-
+import { newGuid } from 'utils/guid';
 const AppWrapper = styled.div`
    width: 100%;
    max-width: 1440px;
@@ -41,14 +41,49 @@ export const App: React.FC = () => {
       },
    ];
    const [columnData, setColumnData] = useState(initialStateColumn);
+   const [showModal, setShowModal] = useState(true);
+   const [userName, setUserName] = useState('');
+
+   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setUserName(e.target.value);
+   };
+
+   const handleToggleModal = () => {
+      setShowModal((prev) => !prev);
+   };
+
+   const handleAddColumnItem = () => {
+      const newItem: any = {
+         id: newGuid(),
+         title: 'Column name',
+         author: userName,
+         cards: [],
+      };
+      setColumnData((prevState) => [newItem, ...prevState]);
+   };
+
+   const handleDeleteColumnItem = (id: number) => {
+      setColumnData((prevState) => prevState.filter((column) => column.id !== id));
+   };
+
+   const handleKeyModal = (e: React.KeyboardEvent) => {
+      if (e.code === 'Enter') {
+         handleToggleModal();
+      }
+   };
 
    return (
       <AppWrapper>
-         <ColumnList />
-         <Modal>
+         <ColumnList
+            columnData={columnData}
+            setColumnData={setColumnData}
+            onDeleteColumn={handleDeleteColumnItem}
+            addItemColumn={handleAddColumnItem}
+         />
+         <Modal showModal={showModal}>
             <Register>
-               <Input />
-               <ButtonIcon typeIcon="Close" />
+               <Input onKeyDown={handleKeyModal} outline="1px solid #EEEEEE" placeholder="Введите ваше имя" value={userName} onChange={handleName} />
+               <ButtonIcon background="transparent" border="transparent" hover="transparent" onClick={handleToggleModal} typeIcon="Close" />
             </Register>
          </Modal>
       </AppWrapper>
