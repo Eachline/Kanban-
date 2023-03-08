@@ -4,12 +4,12 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { App } from 'components';
 
 const theme = {
-   colors: {
-      dark: '#455266',
-      white: '#fff',
-      primary: '#F5F8FA',
-      secondary: '#EEEEEE',
-   },
+  colors: {
+    dark: '#455266',
+    white: '#fff',
+    primary: '#F5F8FA',
+    secondary: '#EEEEEE',
+  },
 };
 
 const Global = createGlobalStyle`
@@ -31,10 +31,10 @@ html, body {
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-   <React.StrictMode>
-      <ThemeProvider theme={theme}>
-         <Global />
-         <App />
-      </ThemeProvider>
-   </React.StrictMode>,
+  <React.StrictMode>
+    <ThemeProvider theme={theme}>
+      <Global />
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>,
 );

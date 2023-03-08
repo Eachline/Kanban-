@@ -1,26 +1,46 @@
 import Button from 'components/Button';
 import ColumnItem from 'components/ColumnItem';
 import React from 'react';
-import styled from 'styled-components';
+import { StyleColumn } from './StyleColumnList';
+import { newGuid } from 'utils/guid';
 
-const StyleColumn = styled.div`
-   padding: 70px 0px 0px 0px;
-   display: flex;
-   flex-direction: row;
-   flex-wrap: wrap;
-   gap: 30px;
-`;
+export const ColumnList: React.FC<any> = ({ columnData, setColumnData, userName }: any) => {
+  const handleAddColumnItem = () => {
+    const newItem: any = {
+      id: newGuid(),
+      title: 'Column name',
+      author: userName,
+      edit: false,
+      cards: [],
+    };
+    setColumnData((prevState: any) => [newItem, ...prevState]);
+  };
 
-export const ColumnList: React.FC<any> = ({ columnData, onDeleteColumn, addItemColumn, setColumnData }: any) => {
-   return (
-      <StyleColumn>
-         <Button onClick={() => addItemColumn()} width="100%">
-            Добавить колонку
-         </Button>
-         {columnData &&
-            columnData.map((column: any) => (
-               <ColumnItem key={column.id} columnData={column} setColumnData={setColumnData} onDeleteColumn={onDeleteColumn} />
-            ))}
-      </StyleColumn>
-   );
+  const handleDeleteColumnItem = (id: number) => {
+    setColumnData((prevState: any) => prevState.filter((column: any) => column.id !== id));
+  };
+
+  const handleEditColumnTitle = (id: number, title: string) => {
+    setColumnData((prevState: any) =>
+      prevState.map((columnEdit: any) => (columnEdit.id === id ? { ...columnEdit, title, edit: !columnEdit.edit } : columnEdit)),
+    );
+  };
+
+  return (
+    <StyleColumn>
+      <Button onClick={() => handleAddColumnItem()} width="100%">
+        Добавить колонку
+      </Button>
+      {columnData &&
+        columnData.map((column: any) => (
+          <ColumnItem
+            key={column.id}
+            columnData={column}
+            setColumnData={setColumnData}
+            onDeleteColumn={handleDeleteColumnItem}
+            onEditTitleColumn={handleEditColumnTitle}
+          />
+        ))}
+    </StyleColumn>
+  );
 };

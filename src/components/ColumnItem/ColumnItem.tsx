@@ -1,38 +1,38 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 import ButtonIcon from 'components/ButtonIcon';
 import CardList from 'components/CardList';
 import Input from 'components/Input';
-const StyleColumnItem = styled.div`
-   display: flex;
-   align-items: center;
-   flex-direction: column;
-   gap: 16px;
-   height: max-content;
-   padding: 16px 16px 16px 16px;
-   max-width: 324px;
-   border-radius: 10px;
-   background-color: #f5f8fa;
-`;
 
-const StyledColumnInner = styled.div`
-   padding: 0px 5px 0px 5px;
-   width: 100%;
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-`;
+import { StyleColumnItem, StyledColumnInner, StyledColumnItem, StyledEditForm, StyledHeaderColumn } from './StyleColumn';
 
-export const ColumnItem: React.FC<any> = ({ columnData, onDeleteColumn }) => {
-   const { author } = columnData;
+export const ColumnItem: React.FC<any> = ({ columnData, setColumnData, onDeleteColumn, onEditTitleColumn }) => {
+  const { author } = columnData;
+  const [columnTitle, setColumnTitle] = useState(columnData.title);
 
-   return (
-      <StyleColumnItem>
-         <StyledColumnInner>
-            <Input value={columnData.title} />
+  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setColumnTitle(e.target.value);
+  };
+
+  const handleSubmitEditTitle = (e: React.ChangeEvent) => {
+    e.preventDefault();
+  };
+
+  return (
+    <StyleColumnItem>
+      <StyledColumnInner>
+        {columnData.edit ? (
+          <StyledEditForm onSubmit={handleSubmitEditTitle}>
+            <Input value={columnTitle} onChange={handleChangeTitle} />
+            <ButtonIcon onClick={() => onEditTitleColumn(columnData.id, columnTitle)} typeIcon="Close" />
+          </StyledEditForm>
+        ) : (
+          <StyledHeaderColumn>
+            <StyledColumnItem onDoubleClick={() => onEditTitleColumn(columnData.id)}>{columnTitle}</StyledColumnItem>
             <ButtonIcon onClick={() => onDeleteColumn(columnData.id)} padding="7px" background="transparent" border="transparent" typeIcon="Close" />
-         </StyledColumnInner>
-         <CardList columnData={columnData} author={author} />
-      </StyleColumnItem>
-   );
+          </StyledHeaderColumn>
+        )}
+      </StyledColumnInner>
+      <CardList columnData={columnData} setColumnData={setColumnData} author={author} />
+    </StyleColumnItem>
+  );
 };
