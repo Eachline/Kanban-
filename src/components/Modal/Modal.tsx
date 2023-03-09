@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModalOverlay, ModalContent, ModalBody } from './StyleModal';
+import * as S from './StyleModal';
 
 interface IModalProps {
   background?: string;
@@ -11,11 +11,11 @@ export const Modal: React.FC<IModalProps> = ({ showModal, children }): JSX.Eleme
   return (
     <>
       {showModal && (
-        <ModalOverlay>
-          <ModalContent onClick={(e) => e.stopPropagation()}>
-            <ModalBody>{children}</ModalBody>
-          </ModalContent>
-        </ModalOverlay>
+        <S.ModalOverlay>
+          <S.ModalContent onClick={(e) => e.stopPropagation()}>
+            <S.ModalBody>{children}</S.ModalBody>
+          </S.ModalContent>
+        </S.ModalOverlay>
       )}
     </>
   );

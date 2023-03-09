@@ -1,5 +1,6 @@
 import React, { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
-import { StyledButton } from './StyleButton';
+import * as S from './StyleButton';
+
 export type ButtonType = 'button' | 'submit' | 'reset';
 
 export interface IButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
@@ -20,8 +21,8 @@ export interface IButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTM
 
 export const Button: React.FC<IButtonProps> = ({ className, children, isDisabled, typeButton, onClick, ...props }) => {
   return (
-    <StyledButton className={className} onClick={onClick} disabled={isDisabled} type={typeButton} {...props}>
+    <S.Button className={className} onClick={onClick} disabled={isDisabled} type={typeButton} {...props}>
       {children}
-    </StyledButton>
+    </S.Button>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
-import { IButtonProps, Button } from 'components/Button/Button';
 import Icon, { IconType } from 'components/Icon';
+import { IButtonProps, Button } from 'components/Button/Button';
 
 export interface IButtonIconProps extends IButtonProps {
   rest?: string[];

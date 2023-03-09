@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyledRegister } from './StyleRegister';
+import * as S from './StyleRegister';
 
 export interface IStyledRegister {
   children?: React.ReactNode;
 }
 
 export const Register: React.FC<IStyledRegister> = ({ children }) => {
-  return <StyledRegister>{children}</StyledRegister>;
+  return <S.Register>{children}</S.Register>;
 };

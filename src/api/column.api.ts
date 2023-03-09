@@ -3,7 +3,14 @@ export const InitialStateColumn: {
   title: string;
   author: string;
   edit: boolean;
-  cards: { id: number; title: string; description: string; edit: boolean; author: string; comments: string[] }[];
+  cards: {
+    id: number | string;
+    title: string;
+    description: string;
+    edit: boolean;
+    author: string;
+    comments: { id: number | string; author: string; edit: boolean; comment: string }[];
+  }[];
 }[] = [
   {
     id: 1,

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledIcon = styled.div`
+export const Icon = styled.div`
   display: inline-flex;
   align-items: center;
   text-align: center;

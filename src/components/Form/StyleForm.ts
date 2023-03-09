@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledForm = styled.form`
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -9,7 +9,7 @@ export const StyledForm = styled.form`
   background: #fff;
 `;
 
-export const StyledFieldList = styled.div`
+export const FieldList = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,16 +17,18 @@ export const StyledFieldList = styled.div`
   gap: 30px;
 `;
 
-export const StyledButtonList = styled.div`
+export const ButtonList = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 30px;
 `;
 
-export const StyledHeaderForm = styled.div`
+export const HeaderForm = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 30px;
 `;
+
+export const HeaderTitle = styled.span``;

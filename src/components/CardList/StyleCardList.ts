@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledCardList = styled.div`
+export const CardList = styled.div`
   margin: 0px 0px 10px 0px;
   padding: 16px 16px 16px 16px;
   min-width: 292px;

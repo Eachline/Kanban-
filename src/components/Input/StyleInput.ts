@@ -6,7 +6,7 @@ export interface IStyledInput {
   background?: string;
 }
 
-export const StyledInput: any = styled.input<IStyledInput>`
+export const Input: any = styled.input<IStyledInput>`
   display: block;
   outline: ${(props) => props.outline || 'transparent'};
   border: none;

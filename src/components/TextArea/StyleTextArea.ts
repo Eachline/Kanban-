@@ -7,7 +7,7 @@ export interface IStyledTextArea {
   height?: string;
 }
 
-export const StyledTextArea = styled.textarea<IStyledTextArea>`
+export const TextArea = styled.textarea<IStyledTextArea>`
   padding: 15px 15px 15px 15px;
   width: ${(props) => props.width || '100%'};
   height: ${(props) => props.height || 'max-content'};

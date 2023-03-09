@@ -3,10 +3,18 @@ import ButtonIcon from 'components/ButtonIcon';
 import CardList from 'components/CardList';
 import Input from 'components/Input';
 
-import { StyleColumnItem, StyledColumnInner, StyledColumnItem, StyledEditForm, StyledHeaderColumn } from './StyleColumn';
+import * as S from './StyleColumn';
 
-export const ColumnItem: React.FC<any> = ({ columnData, setColumnData, onDeleteColumn, onEditTitleColumn }) => {
-  const { author } = columnData;
+export const ColumnItem: React.FC<any> = ({
+  columnData,
+  onDeleteColumn,
+  editColumn,
+  addCard,
+  onDeleteCard,
+  editCard,
+  addComment,
+  onDeleteComment,
+}) => {
   const [columnTitle, setColumnTitle] = useState(columnData.title);
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,21 +26,28 @@ export const ColumnItem: React.FC<any> = ({ columnData, setColumnData, onDeleteC
   };
 
   return (
-    <StyleColumnItem>
-      <StyledColumnInner>
+    <S.ColumnItem>
+      <S.ColumnInner>
         {columnData.edit ? (
-          <StyledEditForm onSubmit={handleSubmitEditTitle}>
+          <S.EditForm onSubmit={handleSubmitEditTitle}>
             <Input value={columnTitle} onChange={handleChangeTitle} />
-            <ButtonIcon onClick={() => onEditTitleColumn(columnData.id, columnTitle)} typeIcon="Close" />
-          </StyledEditForm>
+            <ButtonIcon onClick={() => editColumn(columnData.id, columnTitle)} typeIcon="Close" />
+          </S.EditForm>
         ) : (
-          <StyledHeaderColumn>
-            <StyledColumnItem onDoubleClick={() => onEditTitleColumn(columnData.id)}>{columnTitle}</StyledColumnItem>
+          <S.HeaderColumn>
+            <S.ColumnItem onDoubleClick={() => editColumn(columnData.id)}>{columnTitle}</S.ColumnItem>
             <ButtonIcon onClick={() => onDeleteColumn(columnData.id)} padding="7px" background="transparent" border="transparent" typeIcon="Close" />
-          </StyledHeaderColumn>
+          </S.HeaderColumn>
         )}
-      </StyledColumnInner>
-      <CardList columnData={columnData} setColumnData={setColumnData} author={author} />
-    </StyleColumnItem>
+      </S.ColumnInner>
+      <CardList
+        columnData={columnData}
+        addCard={addCard}
+        onDeleteCard={onDeleteCard}
+        editCard={editCard}
+        addComment={addComment}
+        onDeleteComment={onDeleteComment}
+      />
+    </S.ColumnItem>
   );
 };

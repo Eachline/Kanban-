@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledCommentList = styled.div`
+export const CommentList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,7 +10,7 @@ export const StyledCommentList = styled.div`
   border-radius: 8px;
 `;
 
-export const StyledFormComment = styled.form`
+export const FormComment = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;

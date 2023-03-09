@@ -1,29 +1,13 @@
 import Button from 'components/Button';
+import React, { useState } from 'react';
 import ButtonIcon from 'components/ButtonIcon';
 import CommentList from 'components/CommentList';
 import Icon from 'components/Icon';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import {
-  StyledCardWrapper,
-  StyledCardContainer,
-  StyledCardHeader,
-  StyledCardContent,
-  StyledCardDescription,
-  StyledCardInner,
-  StyledCardUser,
-} from './StyleCard';
+import * as S from './StyleCard';
 
-const StyledFormV333 = styled.form<any>`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-`;
-
-export const CardItem: React.FC<any> = ({ cardData, setColumnData, onDeleteCard, onEditTitle }) => {
+export const CardItem: React.FC<any> = ({ columnIndex, cardData, onDeleteCard, editCard, onEditTitle, addComment, onDeleteComment }) => {
   const [toggleModalCard, setToggleModalCard] = useState(false);
   const [cardTitle, setCardTitle] = useState(cardData.title);
 
@@ -41,16 +25,16 @@ export const CardItem: React.FC<any> = ({ cardData, setColumnData, onDeleteCard,
 
   return (
     <>
-      <StyledCardWrapper>
+      <S.CardWrapper>
         <Button onClick={handleToggleModal} background="#fff" width="100%">
           {cardData.title}
         </Button>
         <Modal showModal={toggleModalCard}>
-          <StyledCardContainer>
-            <StyledCardHeader>
+          <S.CardContainer>
+            <S.CardHeader>
               {/* toggle */}
               {cardData.edit ? (
-                <StyledFormV333 onChange={handleSubmitForm}>
+                <S.CardForm onChange={handleSubmitForm}>
                   <Input outline="1px solid #000" value={cardTitle} onChange={handleChangeCardTitle} />
                   <ButtonIcon
                     background="transparent"
@@ -59,29 +43,29 @@ export const CardItem: React.FC<any> = ({ cardData, setColumnData, onDeleteCard,
                     onClick={() => onEditTitle(cardData.id, cardTitle)}
                     typeIcon="User"
                   />
-                </StyledFormV333>
+                </S.CardForm>
               ) : (
                 <>
                   <span onClick={() => onEditTitle(cardData.id, cardTitle)}>{cardTitle}</span>
                   <ButtonIcon background="transparent" border="transparent" hover="transparent" onClick={handleToggleModal} typeIcon="Close" />
                 </>
               )}
-            </StyledCardHeader>
-            <StyledCardContent>
-              <StyledCardDescription>{cardData.description}</StyledCardDescription>
-              <StyledCardInner>
-                <StyledCardUser>
+            </S.CardHeader>
+            <S.CardContent>
+              <S.CardDescription>{cardData.description}</S.CardDescription>
+              <S.CardInner>
+                <S.CardUser>
                   <Icon type="User" /> {cardData.author}
-                </StyledCardUser>
-                <Button onClick={() => onDeleteCard(cardData.id)} background="#FF0000" hover="#aa1f1f" color="#fff">
+                </S.CardUser>
+                <Button onClick={() => onDeleteCard(columnIndex, cardData.id)} background="#FF0000" hover="#aa1f1f" color="#fff">
                   Delete
                 </Button>
-              </StyledCardInner>
-              <CommentList cardData={cardData} setColumnData={setColumnData} />
-            </StyledCardContent>
-          </StyledCardContainer>
+              </S.CardInner>
+              <CommentList cardData={cardData} addComment={addComment} onDeleteComment={onDeleteComment} columnIndex={columnIndex} />
+            </S.CardContent>
+          </S.CardContainer>
         </Modal>
-      </StyledCardWrapper>
+      </S.CardWrapper>
     </>
   );
 };

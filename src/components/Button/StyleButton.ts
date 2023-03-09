@@ -10,7 +10,7 @@ export interface IStyledButtonProps {
   hover?: string;
 }
 
-export const StyledButton: any = styled.button<IStyledButtonProps>`
+export const Button: any = styled.button<IStyledButtonProps>`
   display: inline-flex;
   align-items: center;
   justify-content: ${(props) => props.justify || 'center'};

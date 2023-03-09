@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledRegister = styled.div`
+export const Register = styled.div`
   width: 100%;
   display: flex;
   align-items: center;

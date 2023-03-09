@@ -1,36 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from 'components/Button';
 import Input from 'components/Input';
 import ButtonIcon from 'components/ButtonIcon';
-import { StyledForm, StyledHeaderForm, StyledFieldList, StyledButtonList } from './StyleForm';
+import * as S from './StyleForm';
 
 export interface IFormProps {
-  onSubmit?: (e: React.ChangeEvent<HTMLFormElement>) => void;
-  value?: { title?: string; description?: string; commets?: string };
-  onChange?: (e: any) => void;
-  onClick?: () => void;
+  columnIndex?: number;
+  onClick?: (id: number, title: string, description: string) => void;
   onClose?: () => void;
   title?: string;
 }
 
-export const Form: React.FC<IFormProps> = ({ onSubmit, value, onChange, onClick, onClose, title }) => {
+export const Form: React.FC<IFormProps> = ({ onClick, onClose, title, columnIndex }: any) => {
+  const [textFieldValue, setTextFieldValue] = useState({ title: '', description: '' });
+
+  const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTextFieldValue((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmitForm = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
-    <StyledForm onSubmit={onSubmit}>
-      <StyledHeaderForm>
-        <span>{title}</span> <ButtonIcon background="transparent" border="transparent" hover="transparent" onClick={onClose} typeIcon="Close" />
-      </StyledHeaderForm>
-      <StyledFieldList>
-        <Input value={value?.title} name="title" onChange={onChange} outline="1px solid #000" placeholder="Название карточки" />
-        <Input value={value?.description} name="description" onChange={onChange} outline="1px solid #000" placeholder="Описание карточки" />
-      </StyledFieldList>
-      <StyledButtonList>
-        <Button onClick={onClose} background="#FF0000" color="#fff" hover="#aa1f1f">
+    <S.Form onSubmit={handleSubmitForm}>
+      <S.HeaderForm>
+        <S.HeaderTitle>{title}</S.HeaderTitle>
+        <ButtonIcon background="transparent" border="transparent" hover="transparent" onClick={onClose} typeIcon="Close" />
+      </S.HeaderForm>
+      <S.FieldList>
+        <Input value={textFieldValue.title} name="title" onChange={handleFieldChange} outline="1px solid #000" placeholder="Название карточки" />
+        <Input
+          value={textFieldValue.description}
+          name="description"
+          onChange={handleFieldChange}
+          outline="1px solid #000"
+          placeholder="Описание карточки"
+        />
+      </S.FieldList>
+      <S.ButtonList>
+        <Button type="submit" onClick={onClose} background="#FF0000" color="#fff" hover="#aa1f1f">
           Cancel
         </Button>
-        <Button onClick={onClick} background="#008000" color="#fff" hover="#046804">
+        <Button
+          type="submit"
+          onClick={() => onClick(columnIndex, textFieldValue.title, textFieldValue.description)}
+          background="#008000"
+          color="#fff"
+          hover="#046804">
           Add Card
         </Button>
-      </StyledButtonList>
-    </StyledForm>
+      </S.ButtonList>
+    </S.Form>
   );
 };

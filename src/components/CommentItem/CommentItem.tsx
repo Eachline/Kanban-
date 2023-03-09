@@ -1,25 +1,25 @@
 import ButtonIcon from 'components/ButtonIcon';
 import Icon from 'components/Icon';
 import React from 'react';
-import { StyledComment, StyledCommentHeader, StyledCommentInner, StyledCommentBody } from './StyleComment';
+import * as S from './StyleComment';
 
-export const CommentItem: React.FC<any> = ({ handleDeleteComment, commentData }) => {
+export const CommentItem: React.FC<any> = ({ commentData, onDeleteComment, columnIndex, cardIndex }) => {
   return (
-    <StyledComment>
-      <StyledCommentHeader>
-        <StyledCommentInner>
+    <S.Comment>
+      <S.CommentHeader>
+        <S.CommentInner>
           <Icon type="User" /> {commentData.author}
-        </StyledCommentInner>
+        </S.CommentInner>
         <ButtonIcon
-          onClick={() => handleDeleteComment(commentData.id)}
+          onClick={() => onDeleteComment(columnIndex, cardIndex, commentData.id)}
           padding="7px"
           background="transparent"
           border="transparent"
           hover="transparent"
           typeIcon="Close"
         />
-      </StyledCommentHeader>
-      <StyledCommentBody>{commentData.comment}</StyledCommentBody>
-    </StyledComment>
+      </S.CommentHeader>
+      <S.CommentBody>{commentData.comment}</S.CommentBody>
+    </S.Comment>
   );
 };

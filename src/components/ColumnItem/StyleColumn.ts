@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyleColumnItem = styled.div`
+export const ColumnItem = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -12,7 +12,7 @@ export const StyleColumnItem = styled.div`
   background-color: #f5f8fa;
 `;
 
-export const StyledColumnInner = styled.div`
+export const ColumnInner = styled.div`
   padding: 0px 5px 0px 5px;
   width: 100%;
   display: flex;
@@ -20,15 +20,13 @@ export const StyledColumnInner = styled.div`
   justify-content: space-between;
 `;
 
-export const StyledColumnItem = styled.span<any>``;
-
-export const StyledEditForm = styled.form<any>`
+export const EditForm = styled.form<any>`
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 
-export const StyledHeaderColumn = styled.div`
+export const HeaderColumn = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
