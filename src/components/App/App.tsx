@@ -9,9 +9,10 @@ import { newGuid } from 'utils/guid';
 import * as S from './StyleApp';
 
 export const App: React.FC = () => {
-  const [columnData, setColumnData] = useState(InitialStateColumn);
-  const [showModal, setShowModal] = useState(true);
+  const [columnData, setColumnData] = useState(JSON.parse(localStorage.getItem('column') as any) || InitialStateColumn);
+  const [showModal, setShowModal] = useState(!localStorage.getItem('column') ? true : false);
   const [userName, setUserName] = useState('');
+
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value);
   };
@@ -93,7 +94,6 @@ export const App: React.FC = () => {
     setColumnData(InitialStateColumn);
   };
 
-  // card
   const handleAddComment = (columnId: number, cardId: number, value: string) => {
     const columnIndex = columnData.findIndex((column: any) => column.id === columnId);
     const initialState = [...columnData];
@@ -109,7 +109,9 @@ export const App: React.FC = () => {
 
     initialState[columnIndex].cards[cardIdx].comments.unshift(newCommentItem);
   };
-  // const handleEditComment = () => {};
+
+  // const handleEditComment = (columnId: number, cardId: number, commentId: number) => {};
+
   const handleDeleteComment = (columnId: number, cardId: number, commentId: number) => {
     const columnIndex = columnData.findIndex((column: any) => column.id === columnId);
     const initialState = [...columnData];
@@ -122,7 +124,7 @@ export const App: React.FC = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem('Column', JSON.stringify(columnData));
+    localStorage.setItem('column', JSON.stringify(columnData));
   }, [columnData]);
 
   return (
