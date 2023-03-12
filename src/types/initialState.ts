@@ -1,15 +1,31 @@
-export interface IInitialStateColumn {
-  id: number;
+export type TInitialStateColumn = {
+  id: string;
   title: string;
   author: string;
   edit: boolean;
-  cards: {
-    id: number;
-    title: string;
-    description: string;
-    edit: boolean;
-    author: string;
-    comments: string[];
-  }[];
-}
-[];
+  cards: TCard[];
+}[];
+
+export type TCard = {
+  id: string;
+  title: string;
+  description: string;
+  edit: boolean;
+  author: string;
+  comments: TComment[];
+};
+
+export type TComment = {
+  id: string;
+  author: string;
+  edit: boolean;
+  comment: string;
+};
+
+export type TColumn = {
+  id: string;
+  title: string;
+  author: string;
+  edit: boolean;
+  cards: TCard[];
+};

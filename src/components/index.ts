@@ -1,34 +1,15 @@
 import App from './App';
-import Button from './Button';
-import ButtonIcon from './ButtonIcon';
-import CardItem from './CardItem';
-import CardList from './CardList';
-import ColumnItem from './ColumnItem';
-import ColumnList from './ColumnList';
-import Form from './Form';
-import EditForm from './EditForm';
-import Icon from './Icon';
-import Input from './Input';
-import TextArea from './TextArea';
-import Modal from './Modal';
-import Register from './Register';
-import CommentList from './CommentList';
-import CommentItem from './CommentItem';
-export {
-  App,
-  Button,
-  ButtonIcon,
-  CardItem,
-  CardList,
-  ColumnItem,
-  ColumnList,
-  CommentList,
-  CommentItem,
-  EditForm,
-  Form,
-  Icon,
-  Input,
-  TextArea,
-  Register,
-  Modal,
-};
+import Button from './ui/Button';
+import ButtonIcon from './ui/ButtonIcon';
+import CardItem from './Card/CardItem';
+import CardList from './Card/CardList';
+import ColumnItem from './Column/ColumnItem';
+import ColumnList from './Column/ColumnList';
+import Form from './ui/Form';
+import Icon from './ui/Icon';
+import Input from './ui/Input';
+import TextArea from './ui/TextArea';
+import Modal from './ui/Modal';
+import CommentList from './Comment/CommentList';
+import CommentItem from './Comment/CommentItem';
+export { App, Button, ButtonIcon, CardItem, CardList, ColumnItem, ColumnList, CommentList, CommentItem, Form, Icon, Input, TextArea, Modal };
