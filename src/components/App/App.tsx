@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import InitialStateColumn from 'api/column.api';
 import Input from 'components/ui/Input';
 import Modal from 'components/ui/Modal';
@@ -7,10 +7,11 @@ import ColumnList from 'components/Column/ColumnList';
 import * as S from './StyleApp';
 
 import { newGuid } from 'utils/guid';
-import { TInitialStateColumn, TColumn, TComment, TCard } from 'types/initialState';
+import { TColumn, TComment, TCard } from 'types/initialState';
+import { useLocalStorage } from 'hook/useLocalStorage';
 
 export const App: React.FC = () => {
-  const [columnData, setColumnData] = useState<TInitialStateColumn>(JSON.parse(localStorage.getItem('column') as string) || InitialStateColumn);
+  const [columnData, setColumnData] = useLocalStorage('column', InitialStateColumn);
   const [showModal, setShowModal] = useState<boolean>(!localStorage.getItem('column') ? true : false);
   const [userName, setUserName] = useState('');
 
@@ -99,7 +100,7 @@ export const App: React.FC = () => {
 
     const cardIdx = cards.findIndex((card) => card.id === cardIndex);
     initialState[columnId].cards[cardIdx] = card;
-    setColumnData(InitialStateColumn);
+    setColumnData(initialState);
   };
 
   const handleAddComment = (columnId: string, cardId: string, value: string) => {
@@ -116,6 +117,7 @@ export const App: React.FC = () => {
     };
 
     initialState[columnIndex].cards[cardIdx].comments.unshift(newCommentItem);
+    setColumnData(initialState);
   };
 
   const handleEditComment = (columnIndex: string, cardIndex: string, commentIndex: string, comment: TComment) => {
@@ -126,7 +128,7 @@ export const App: React.FC = () => {
     const comments = initialState[columnId].cards[cardIdx].comments;
     const commentIdx = comments.findIndex((comment) => comment.id === commentIndex);
     initialState[columnId].cards[cardIdx].comments[commentIdx] = comment;
-    setColumnData(InitialStateColumn);
+    setColumnData(initialState);
   };
 
   const handleDeleteComment = (columnId: string, cardId: string, commentId: string) => {
@@ -139,10 +141,6 @@ export const App: React.FC = () => {
     comment.splice(commentIdx, 1);
     setColumnData(initialState);
   };
-
-  useEffect(() => {
-    localStorage.setItem('column', JSON.stringify(columnData));
-  }, [columnData]);
 
   return (
     <S.Container>

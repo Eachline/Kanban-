@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ButtonIcon from 'components/ui/ButtonIcon';
 import Icon from 'components/ui/Icon';
 import Form from './Form';
@@ -35,6 +35,10 @@ export const CommentItem: React.FC<ICommentItem> = ({ commentData, onDeleteComme
       updateComment(valueComment);
     }
   };
+
+  useEffect(() => {
+    if (editComment) editComment(columnIndex, cardIndex, comment.id, comment);
+  }, [comment]);
 
   return (
     <S.Comment>

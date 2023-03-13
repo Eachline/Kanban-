@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ButtonIcon from 'components/ui/ButtonIcon';
 import CardList from 'components/Card/CardList';
 import * as S from './StyleColumn';
@@ -37,6 +37,10 @@ export const ColumnItem: React.FC<IColumnItem> = ({
     updateColumnTitle(columnTitle);
     handleEditColumn();
   };
+
+  useEffect(() => {
+    if (editColumn) editColumn(column.id, column);
+  }, [column]);
 
   return (
     <S.ColumnItem>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Icon from 'components/ui/Icon';
 import Modal from 'components/ui/Modal';
 import Button from 'components/ui/Button';
@@ -41,11 +41,21 @@ export const CardItem: React.FC<ICardItem> = ({ columnIndex, cardData, onDeleteC
     handleShowEdit();
   };
 
+  useEffect(() => {
+    if (editCard) editCard(columnIndex, card.id, card);
+  }, [card]);
+
   return (
     <>
       <S.CardWrapper>
-        <Button onClick={handleToggleModal} background="#fff" width="100%">
-          {cardData.title}
+        <Button justify="flex-start" onClick={handleToggleModal} background="#fff" width="100%">
+          <S.CardButtonInner>
+            <S.CardTitle>{card.title}</S.CardTitle>
+            <S.CardButtonComments>
+              <Icon type="Comment" />
+              {card.comments.length}
+            </S.CardButtonComments>
+          </S.CardButtonInner>
         </Button>
         <Modal showModal={toggleModalCard}>
           <S.CardContainer>
@@ -74,14 +84,14 @@ export const CardItem: React.FC<ICardItem> = ({ columnIndex, cardData, onDeleteC
             <S.CardContent>
               <S.CardInner>
                 <S.CardUser>
-                  <Icon type="User" /> {cardData.author}
+                  <Icon type="User" /> {card.author}
                 </S.CardUser>
-                <Button onClick={() => onDeleteCard(columnIndex, cardData.id)} background="#FF0000" hover="#aa1f1f" color="#fff">
+                <Button onClick={() => onDeleteCard(columnIndex, card.id)} background="#FF0000" hover="#aa1f1f" color="#fff">
                   Delete
                 </Button>
               </S.CardInner>
               <CommentList
-                cardData={cardData}
+                cardData={card}
                 addComment={addComment}
                 onDeleteComment={onDeleteComment}
                 editComment={editComment}

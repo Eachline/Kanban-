@@ -59,4 +59,15 @@ export const CardFormHeader = styled.div`
   justify-content: space-between;
 `;
 
+export const CardButtonInner = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
+export const CardButtonComments = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 7px;
+`;
 export const CardTitle = styled.span``;
