@@ -20,6 +20,7 @@ export const Form: React.FC<IFormProps> = ({ onClick, onClose, title, columnInde
 
   const handleSubmitForm = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+    onClose();
   };
 
   return (

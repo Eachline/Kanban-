@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ButtonIcon from 'components/ui/ButtonIcon';
 import CardList from 'components/Card/CardList';
 import * as S from './StyleColumn';
@@ -16,9 +16,8 @@ export const ColumnItem: React.FC<IColumnItem> = ({
   onDeleteComment,
   editComment,
 }) => {
-  const [column, setColumn] = useState({ ...columnData });
   const [showEditColumn, setShowEditColumn] = useState(false);
-  const [columnTitle, setColumnTitle] = useState(column.title);
+  const [columnTitle, setColumnTitle] = useState(columnData.title);
 
   const handleEditColumn = () => {
     setShowEditColumn((prevState) => !prevState);
@@ -29,7 +28,8 @@ export const ColumnItem: React.FC<IColumnItem> = ({
   };
 
   const updateColumnTitle = (title: string) => {
-    setColumn({ ...column, title: title });
+    const newColumn = { ...columnData, title };
+    editColumn(newColumn.id, newColumn);
   };
 
   const handleSubmitEditTitle = (e: React.ChangeEvent) => {
@@ -37,10 +37,6 @@ export const ColumnItem: React.FC<IColumnItem> = ({
     updateColumnTitle(columnTitle);
     handleEditColumn();
   };
-
-  useEffect(() => {
-    if (editColumn) editColumn(column.id, column);
-  }, [column]);
 
   return (
     <S.ColumnItem>
@@ -51,18 +47,18 @@ export const ColumnItem: React.FC<IColumnItem> = ({
             value={columnTitle}
             onChange={handleChangeTitle}
             onClick={editColumn}
-            columnId={column.id}
-            column={column}
+            columnId={columnData.id}
+            column={columnData}
           />
         ) : (
           <S.HeaderColumn>
             <S.ColumnItem onDoubleClick={handleEditColumn}>{columnTitle}</S.ColumnItem>
-            <ButtonIcon onClick={() => onDeleteColumn(column.id)} padding="7px" background="transparent" border="transparent" typeIcon="Close" />
+            <ButtonIcon onClick={() => onDeleteColumn(columnData.id)} padding="7px" background="transparent" border="transparent" typeIcon="Close" />
           </S.HeaderColumn>
         )}
       </S.ColumnInner>
       <CardList
-        columnData={column}
+        columnData={columnData}
         addCard={addCard}
         onDeleteCard={onDeleteCard}
         editCard={editCard}

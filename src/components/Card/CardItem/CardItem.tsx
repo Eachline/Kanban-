@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Icon from 'components/ui/Icon';
 import Modal from 'components/ui/Modal';
 import Button from 'components/ui/Button';
@@ -10,9 +10,8 @@ import Form from './Form';
 import { useKeyDown } from 'hook/useKeyDown';
 
 export const CardItem: React.FC<ICardItem> = ({ columnIndex, cardData, onDeleteCard, editCard, addComment, onDeleteComment, editComment }) => {
-  const [card, setCard] = useState({ ...cardData });
-  const [cardTitle, setCardTitle] = useState(card.title);
-  const [cardDescription, setCardDescription] = useState(card.description);
+  const [cardTitle, setCardTitle] = useState(cardData.title);
+  const [cardDescription, setCardDescription] = useState(cardData.description);
   const [showEditCard, setShowEditCard] = useState(false);
   const [toggleModalCard, setToggleModalCard] = useState(false);
 
@@ -44,7 +43,8 @@ export const CardItem: React.FC<ICardItem> = ({ columnIndex, cardData, onDeleteC
   };
 
   const updateCard = (title: string, description: string) => {
-    setCard({ ...card, title: title, description: description });
+    const newCard = { ...cardData, title, description };
+    editCard(columnIndex, newCard.id, newCard);
   };
 
   const handleSubmitForm = (e: React.ChangeEvent<HTMLFormElement>) => {
@@ -53,19 +53,15 @@ export const CardItem: React.FC<ICardItem> = ({ columnIndex, cardData, onDeleteC
     handleShowEdit();
   };
 
-  useEffect(() => {
-    if (editCard) editCard(columnIndex, card.id, card);
-  }, [card]);
-
   return (
     <>
       <S.CardWrapper>
         <Button justify="flex-start" onClick={handleOpenModal} background="#fff" width="100%">
           <S.CardButtonInner>
-            <S.CardTitle>{card.title}</S.CardTitle>
+            <S.CardTitle>{cardData.title}</S.CardTitle>
             <S.CardButtonComments>
               <Icon type="Comment" />
-              {card.comments.length}
+              {cardData.comments.length}
             </S.CardButtonComments>
           </S.CardButtonInner>
         </Button>
@@ -81,29 +77,29 @@ export const CardItem: React.FC<ICardItem> = ({ columnIndex, cardData, onDeleteC
                   onChangeArea={handleChangeCardDesc}
                   onChangeInput={handleChangeCardTitle}
                   onClick={editCard}
-                  card={card}
+                  card={cardData}
                 />
               ) : (
                 <S.CardForm>
                   <S.CardFormHeader>
-                    <S.CardTitle onClick={handleShowEdit}>{card.title}</S.CardTitle>
+                    <S.CardTitle onClick={handleShowEdit}>{cardData.title}</S.CardTitle>
                     <ButtonIcon background="transparent" border="transparent" hover="transparent" onClick={handleCloseModal} typeIcon="Close" />
                   </S.CardFormHeader>
-                  <S.CardDescription onClick={handleShowEdit}>{card.description}</S.CardDescription>
+                  <S.CardDescription onClick={handleShowEdit}>{cardData.description}</S.CardDescription>
                 </S.CardForm>
               )}
             </S.CardHeader>
             <S.CardContent>
               <S.CardInner>
                 <S.CardUser>
-                  <Icon type="User" /> {card.author}
+                  <Icon type="User" /> {cardData.author}
                 </S.CardUser>
-                <Button onClick={() => onDeleteCard(columnIndex, card.id)} background="#FF0000" hover="#aa1f1f" color="#fff">
+                <Button onClick={() => onDeleteCard(columnIndex, cardData.id)} background="#FF0000" hover="#aa1f1f" color="#fff">
                   Delete
                 </Button>
               </S.CardInner>
               <CommentList
-                cardData={card}
+                cardData={cardData}
                 addComment={addComment}
                 onDeleteComment={onDeleteComment}
                 editComment={editComment}

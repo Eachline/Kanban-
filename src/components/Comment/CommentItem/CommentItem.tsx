@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ButtonIcon from 'components/ui/ButtonIcon';
 import Icon from 'components/ui/Icon';
 import Form from './Form';
@@ -7,8 +7,7 @@ import * as S from './StyleComment';
 import { ICommentItem } from 'types/comment/commentItem';
 
 export const CommentItem: React.FC<ICommentItem> = ({ commentData, onDeleteComment, editComment, columnIndex, cardIndex }) => {
-  const [comment, setComment] = useState({ ...commentData });
-  const [valueComment, setValueComment] = useState(comment.comment);
+  const [valueComment, setValueComment] = useState(commentData.comment);
   const [showEditComment, setShowEditComment] = useState(false);
 
   const handleShowEdit = () => {
@@ -26,7 +25,8 @@ export const CommentItem: React.FC<ICommentItem> = ({ commentData, onDeleteComme
   };
 
   const updateComment = (value: string) => {
-    setComment({ ...comment, comment: value });
+    const newComment = { ...commentData, comment: value };
+    editComment(columnIndex, cardIndex, newComment.id, newComment);
   };
 
   const handleKeyEditForm = (e: React.KeyboardEvent) => {
@@ -36,10 +36,6 @@ export const CommentItem: React.FC<ICommentItem> = ({ commentData, onDeleteComme
     }
   };
 
-  useEffect(() => {
-    if (editComment) editComment(columnIndex, cardIndex, comment.id, comment);
-  }, [comment]);
-
   return (
     <S.Comment>
       <S.CommentHeader>
@@ -47,7 +43,7 @@ export const CommentItem: React.FC<ICommentItem> = ({ commentData, onDeleteComme
           <Icon type="User" /> {commentData.author}
         </S.CommentInner>
         <ButtonIcon
-          onClick={() => onDeleteComment(columnIndex, cardIndex, comment.id)}
+          onClick={() => onDeleteComment(columnIndex, cardIndex, commentData.id)}
           padding="7px"
           background="transparent"
           border="transparent"
@@ -58,7 +54,7 @@ export const CommentItem: React.FC<ICommentItem> = ({ commentData, onDeleteComme
       {showEditComment ? (
         <Form onSubmit={handleSubmitForm} onChange={handleChangeCommentValue} onKeyDown={handleKeyEditForm} value={valueComment} />
       ) : (
-        <S.CommentBody onDoubleClick={handleShowEdit}>{comment.comment}</S.CommentBody>
+        <S.CommentBody onDoubleClick={handleShowEdit}>{commentData.comment}</S.CommentBody>
       )}
     </S.Comment>
   );
