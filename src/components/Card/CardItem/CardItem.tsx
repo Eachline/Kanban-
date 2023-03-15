@@ -33,6 +33,7 @@ export const CardItem: React.FC<ICardItem> = ({ columnIndex, cardData, onDeleteC
       handleCloseModal();
     }
   };
+  useKeyDown(handleKeyModal);
 
   const handleChangeCardTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCardTitle(e.target.value);
@@ -55,8 +56,6 @@ export const CardItem: React.FC<ICardItem> = ({ columnIndex, cardData, onDeleteC
   useEffect(() => {
     if (editCard) editCard(columnIndex, card.id, card);
   }, [card]);
-
-  useKeyDown(handleKeyModal);
 
   return (
     <>
@@ -87,7 +86,7 @@ export const CardItem: React.FC<ICardItem> = ({ columnIndex, cardData, onDeleteC
               ) : (
                 <S.CardForm>
                   <S.CardFormHeader>
-                    <S.CardTitle onClick={handleShowEdit}>{card.title}11233</S.CardTitle>
+                    <S.CardTitle onClick={handleShowEdit}>{card.title}</S.CardTitle>
                     <ButtonIcon background="transparent" border="transparent" hover="transparent" onClick={handleCloseModal} typeIcon="Close" />
                   </S.CardFormHeader>
                   <S.CardDescription onClick={handleShowEdit}>{card.description}</S.CardDescription>

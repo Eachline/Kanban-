@@ -91,12 +91,17 @@ export const App: React.FC = () => {
 
   const handleEditCard = (columnIndex: string, cardIndex: string, card: TCard) => {
     const initialState = [...columnData];
-    const columnId = columnData.findIndex((column) => column.id === columnIndex);
-    const cards = initialState[columnId].cards;
-
-    const cardIdx = cards.findIndex((card) => card.id === cardIndex);
-    initialState[columnId].cards[cardIdx] = card;
-    setColumnData(initialState);
+    const newInitialState = initialState.map((column) => {
+      if (column.id === columnIndex) {
+        for (let i = 0; i < column.cards.length; i++) {
+          if (column.cards[i].id === cardIndex) {
+            column.cards[i] = card;
+          }
+        }
+      }
+      return column;
+    });
+    setColumnData(newInitialState);
   };
 
   const handleAddComment = (columnId: string, cardId: string, value: string) => {
@@ -116,14 +121,22 @@ export const App: React.FC = () => {
   };
 
   const handleEditComment = (columnIndex: string, cardIndex: string, commentIndex: string, comment: TComment) => {
-    const columnId = columnData.findIndex((column) => column.id === columnIndex);
     const initialState = [...columnData];
-    const cards = initialState[columnId].cards;
-    const cardIdx = cards.findIndex((card) => card.id === cardIndex);
-    const comments = initialState[columnId].cards[cardIdx].comments;
-    const commentIdx = comments.findIndex((comment) => comment.id === commentIndex);
-    initialState[columnId].cards[cardIdx].comments[commentIdx] = comment;
-    setColumnData(initialState);
+    const newInitialState = initialState.map((column) => {
+      if (column.id === columnIndex) {
+        for (let i = 0; i < column.cards.length; i++) {
+          if (column.cards[i].id === cardIndex) {
+            for (let j = 0; j < column.cards[i].comments.length; j++) {
+              if (column.cards[i].comments[j].id === commentIndex) {
+                column.cards[i].comments[j] = comment;
+              }
+            }
+          }
+        }
+      }
+      return column;
+    });
+    setColumnData(newInitialState);
   };
 
   const handleDeleteComment = (columnId: string, cardId: string, commentId: string) => {
