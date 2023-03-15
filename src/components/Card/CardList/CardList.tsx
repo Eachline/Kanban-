@@ -5,22 +5,35 @@ import Form from 'components/ui/Form';
 import CardItem from 'components/Card/CardItem';
 import * as S from './StyleCardList';
 import { ICardList } from 'types/card/cardList';
+import { useKeyDown } from 'hook/useKeyDown';
 
 export const CardList: React.FC<ICardList> = ({ columnData, addCard, onDeleteCard, editCard, addComment, onDeleteComment, editComment }) => {
   const { title, id, cards } = columnData;
   const [modalAddCard, setModalAddCard] = useState(false);
 
-  const handleAddItemModal = () => {
+  const handleOpenModal = () => {
     setModalAddCard((prevState) => !prevState);
   };
 
+  const handleCloseModal = () => {
+    setModalAddCard(false);
+  };
+
+  const handleKeyModal = (e: any) => {
+    if (e.code === 'Escape') {
+      handleCloseModal();
+    }
+  };
+
+  useKeyDown(handleKeyModal);
+
   return (
     <S.CardList>
-      <Button onClick={handleAddItemModal} background="#fff" hover="#eee" width="100%">
+      <Button onClick={handleOpenModal} background="#fff" hover="#eee" width="100%">
         <span>Добавить карточку</span>
       </Button>
-      <Modal showModal={modalAddCard}>
-        <Form title={title} columnIndex={id} onClick={addCard} onClose={handleAddItemModal} />
+      <Modal onClick={handleOpenModal} showModal={modalAddCard}>
+        <Form title={title} columnIndex={id} onClick={addCard} onClose={handleCloseModal} />
       </Modal>
       {cards &&
         cards.map((card) => (

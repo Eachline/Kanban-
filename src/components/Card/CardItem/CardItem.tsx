@@ -7,6 +7,7 @@ import CommentList from 'components/Comment/CommentList';
 import * as S from './StyleCard';
 import { ICardItem } from 'types/card/cardItem';
 import Form from './Form';
+import { useKeyDown } from 'hook/useKeyDown';
 
 export const CardItem: React.FC<ICardItem> = ({ columnIndex, cardData, onDeleteCard, editCard, addComment, onDeleteComment, editComment }) => {
   const [card, setCard] = useState({ ...cardData });
@@ -15,12 +16,22 @@ export const CardItem: React.FC<ICardItem> = ({ columnIndex, cardData, onDeleteC
   const [showEditCard, setShowEditCard] = useState(false);
   const [toggleModalCard, setToggleModalCard] = useState(false);
 
-  const handleToggleModal = () => {
-    setToggleModalCard((prevState) => !prevState);
+  const handleOpenModal = () => {
+    setToggleModalCard(true);
+  };
+
+  const handleCloseModal = () => {
+    setToggleModalCard(false);
   };
 
   const handleShowEdit = () => {
     setShowEditCard((prevState) => !prevState);
+  };
+
+  const handleKeyModal = (e: any) => {
+    if (e.key === 'Escape') {
+      handleCloseModal();
+    }
   };
 
   const handleChangeCardTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,10 +56,12 @@ export const CardItem: React.FC<ICardItem> = ({ columnIndex, cardData, onDeleteC
     if (editCard) editCard(columnIndex, card.id, card);
   }, [card]);
 
+  useKeyDown(handleKeyModal);
+
   return (
     <>
       <S.CardWrapper>
-        <Button justify="flex-start" onClick={handleToggleModal} background="#fff" width="100%">
+        <Button justify="flex-start" onClick={handleOpenModal} background="#fff" width="100%">
           <S.CardButtonInner>
             <S.CardTitle>{card.title}</S.CardTitle>
             <S.CardButtonComments>
@@ -57,7 +70,7 @@ export const CardItem: React.FC<ICardItem> = ({ columnIndex, cardData, onDeleteC
             </S.CardButtonComments>
           </S.CardButtonInner>
         </Button>
-        <Modal showModal={toggleModalCard}>
+        <Modal showModal={toggleModalCard} onClick={handleCloseModal}>
           <S.CardContainer>
             <S.CardHeader>
               {showEditCard ? (
@@ -74,8 +87,8 @@ export const CardItem: React.FC<ICardItem> = ({ columnIndex, cardData, onDeleteC
               ) : (
                 <S.CardForm>
                   <S.CardFormHeader>
-                    <S.CardTitle onClick={handleShowEdit}>{card.title}</S.CardTitle>
-                    <ButtonIcon background="transparent" border="transparent" hover="transparent" onClick={handleToggleModal} typeIcon="Close" />
+                    <S.CardTitle onClick={handleShowEdit}>{card.title}11233</S.CardTitle>
+                    <ButtonIcon background="transparent" border="transparent" hover="transparent" onClick={handleCloseModal} typeIcon="Close" />
                   </S.CardFormHeader>
                   <S.CardDescription onClick={handleShowEdit}>{card.description}</S.CardDescription>
                 </S.CardForm>

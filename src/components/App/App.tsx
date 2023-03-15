@@ -9,6 +9,7 @@ import * as S from './StyleApp';
 import { newGuid } from 'utils/guid';
 import { TColumn, TComment, TCard } from 'types/initialState';
 import { useLocalStorage } from 'hook/useLocalStorage';
+import { useKeyDown } from 'hook/useKeyDown';
 
 export const App: React.FC = () => {
   const [columnData, setColumnData] = useLocalStorage('column', InitialStateColumn);
@@ -19,13 +20,13 @@ export const App: React.FC = () => {
     setUserName(e.target.value);
   };
 
-  const handleToggleModal = () => {
-    setShowModal((prev) => !prev);
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
-  const handleKeyModal = (e: React.KeyboardEvent) => {
-    if (e.code === 'Enter') {
-      handleToggleModal();
+  const handleKeyModal = (e: any) => {
+    if (e.code === 'Enter' || e.code === 'Escape') {
+      handleCloseModal();
     }
   };
 
@@ -51,10 +52,9 @@ export const App: React.FC = () => {
   };
 
   const handleEditColumn = (id: string, column: TColumn) => {
-    const columnIndex = columnData.findIndex((column) => column.id === id);
     const initialState = [...columnData];
-    initialState[columnIndex] = column;
-    setColumnData(initialState);
+    const newInitialState = initialState.map((columnItem) => (columnItem.id === id ? (columnItem = column) : columnItem));
+    setColumnData(newInitialState);
   };
 
   const handleDeleteColumn = (id: string) => {
@@ -65,8 +65,8 @@ export const App: React.FC = () => {
   };
 
   const handleAddCard = (id: string, title: string, description: string) => {
-    const columnIndex = columnData.findIndex((column) => column.id === id);
     const initialState = [...columnData];
+    const columnItem = initialState.find((column) => column.id === id);
 
     const newItemCard = {
       id: newGuid(),
@@ -77,25 +77,21 @@ export const App: React.FC = () => {
       comments: [],
     };
 
-    initialState[columnIndex].cards.unshift(newItemCard);
-
+    columnItem?.cards.unshift(newItemCard);
     setColumnData(initialState);
   };
 
   const handleDeleteCard = (columnIndex: string, cardIndex: string) => {
-    const columnId = columnData.findIndex((column) => column.id === columnIndex);
     const initialState = [...columnData];
-    const cards = initialState[columnId].cards;
-
-    const cardId = cards.findIndex((card) => card.id === cardIndex);
-
-    cards.splice(cardId, 1);
+    const columnItem = initialState.find((column) => column.id === columnIndex);
+    const cardItem = columnItem?.cards.findIndex((card) => card.id === cardIndex);
+    columnItem?.cards.splice(Number(cardItem), 1);
     setColumnData(initialState);
   };
 
   const handleEditCard = (columnIndex: string, cardIndex: string, card: TCard) => {
-    const columnId = columnData.findIndex((column) => column.id === columnIndex);
     const initialState = [...columnData];
+    const columnId = columnData.findIndex((column) => column.id === columnIndex);
     const cards = initialState[columnId].cards;
 
     const cardIdx = cards.findIndex((card) => card.id === cardIndex);
@@ -104,10 +100,9 @@ export const App: React.FC = () => {
   };
 
   const handleAddComment = (columnId: string, cardId: string, value: string) => {
-    const columnIndex = columnData.findIndex((column) => column.id === columnId);
     const initialState = [...columnData];
-    const card = initialState[columnIndex].cards;
-    const cardIdx = card.findIndex((card) => card.id === cardId);
+    const columnItem = initialState.find((column) => column.id === columnId);
+    const cardItem = columnItem?.cards.find((card) => card.id === cardId);
 
     const newCommentItem = {
       id: newGuid(),
@@ -116,7 +111,7 @@ export const App: React.FC = () => {
       comment: value,
     };
 
-    initialState[columnIndex].cards[cardIdx].comments.unshift(newCommentItem);
+    cardItem?.comments.unshift(newCommentItem);
     setColumnData(initialState);
   };
 
@@ -132,15 +127,15 @@ export const App: React.FC = () => {
   };
 
   const handleDeleteComment = (columnId: string, cardId: string, commentId: string) => {
-    const columnIndex = columnData.findIndex((column) => column.id === columnId);
     const initialState = [...columnData];
-    const card = initialState[columnIndex].cards;
-    const cardIdx = card.findIndex((card) => card.id === cardId);
-    const comment = initialState[columnIndex].cards[cardIdx].comments;
-    const commentIdx = comment.findIndex((comment) => comment.id === commentId);
-    comment.splice(commentIdx, 1);
+    const columnItem = initialState.find((column) => column.id === columnId);
+    const cardItem = columnItem?.cards.find((card) => card.id === cardId);
+    const commentIndex = cardItem?.comments.findIndex((comments) => comments.id === commentId);
+    cardItem?.comments.splice(Number(commentIndex), 1);
     setColumnData(initialState);
   };
+
+  useKeyDown(handleKeyModal);
 
   return (
     <S.Container>
@@ -156,10 +151,10 @@ export const App: React.FC = () => {
         onDeleteComment={handleDeleteComment}
         editComment={handleEditComment}
       />
-      <Modal showModal={showModal}>
+      <Modal showModal={showModal} onClick={handleCloseModal}>
         <S.Register>
-          <Input onKeyDown={handleKeyModal} outline="1px solid #EEEEEE" placeholder="Введите ваше имя" value={userName} onChange={handleName} />
-          <ButtonIcon background="transparent" border="transparent" hover="transparent" onClick={handleToggleModal} typeIcon="Close" />
+          <Input outline="1px solid #EEEEEE" placeholder="Введите ваше имя" value={userName} onChange={handleName} />
+          <ButtonIcon background="transparent" border="transparent" hover="transparent" onClick={handleCloseModal} typeIcon="Close" />
         </S.Register>
       </Modal>
     </S.Container>
