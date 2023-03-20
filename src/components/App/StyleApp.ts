@@ -7,7 +7,7 @@ export const Container = styled.div`
   height: 100%;
 `;
 
-export const Register = styled.div`
+export const Register = styled.form`
   width: 100%;
   display: flex;
   align-items: center;

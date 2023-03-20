@@ -1,4 +1,4 @@
-import { TCard, TComment } from '../initialState';
+import { TCard } from '../initialState';
 
 export interface ICardItem {
   columnIndex: string;

@@ -4,7 +4,6 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import ColumnReducer from '../features/Column-Slice';
 
-// save reducers
 const rootReducer = combineReducers({
   column: ColumnReducer,
 });
@@ -16,7 +15,6 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// create Store
 export const setupStore = () => {
   return configureStore({
     reducer: persistedReducer,
@@ -24,11 +22,9 @@ export const setupStore = () => {
   });
 };
 
-// import index
 export const store = setupStore();
 export const persistor = persistStore(store);
 
-// Hooks
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
 export type AppDispatch = AppStore['dispatch'];

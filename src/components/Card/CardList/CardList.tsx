@@ -18,7 +18,7 @@ export const CardList: React.FC<ICardList> = ({ columnData }) => {
     setModalAddCard(false);
   };
 
-  const handleKeyModal = (e: any) => {
+  const handleKeyModal = (e: React.KeyboardEvent) => {
     if (e.code === 'Escape') {
       handleCloseModal();
     }

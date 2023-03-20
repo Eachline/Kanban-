@@ -7,7 +7,7 @@ const columnSlice = createSlice({
   initialState: InitialStateColumn,
   reducers: {
     addAuthor: (state, action) => {
-      return state.map((column) => (column.author = action.payload.username));
+      state.map((column) => (column.author = action.payload.username));
     },
     addColumn: (state) => {
       state.unshift({
@@ -92,6 +92,7 @@ const columnSlice = createSlice({
 });
 
 export const {
+  addAuthor,
   addColumn,
   addCard,
   addComment,

@@ -19,7 +19,7 @@ export const Form: React.FC<ICommentForm> = ({ commentData, cardIndex }) => {
     defaultValues: { editComment: commentData.comment },
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: { editComment: string }) => {
     dispatch(editComment({ _id: commentData._id, id: commentData.id, cardIndex: cardIndex, comment: data.editComment }));
     reset();
   };

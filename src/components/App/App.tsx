@@ -6,23 +6,33 @@ import ColumnList from 'components/Column/ColumnList';
 import * as S from './StyleApp';
 import { useKeyDown } from 'hook/useKeyDown';
 import { useForm } from 'react-hook-form';
+import { useAppDispatch } from 'hook/useAppDispatch';
+import { addAuthor } from 'features/Column-Slice';
 export const App: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean>(!localStorage.getItem('persist:column') ? true : false);
-  const [userName, setUserName] = useState('');
-  const { register } = useForm();
 
-  const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserName(e.target.value);
-  };
+  const { register, handleSubmit, reset } = useForm({
+    shouldUnregister: true,
+    defaultValues: { username: '' },
+  });
+
+  const dispatch = useAppDispatch();
 
   const handleCloseModal = () => {
     setShowModal(false);
   };
 
-  const handleKeyModal = (e: any) => {
+  const handleKeyModal = (e: React.KeyboardEvent) => {
     if (e.code === 'Enter' || e.code === 'Escape') {
       handleCloseModal();
     }
+  };
+
+  const onSubmit = (data: { username: string }) => {
+    dispatch(addAuthor({ username: data.username }));
+    handleCloseModal();
+    reset();
+    console.log(data);
   };
 
   useKeyDown(handleKeyModal);
@@ -31,16 +41,9 @@ export const App: React.FC = () => {
     <S.Container>
       <ColumnList />
       <Modal showModal={showModal} onClick={handleCloseModal}>
-        <S.Register>
-          <Input
-            register={register}
-            name="username"
-            outline="1px solid #EEEEEE"
-            placeholder="Введите ваше имя"
-            value={userName}
-            onChange={handleName}
-          />
-          <ButtonIcon background="transparent" border="transparent" hover="transparent" onClick={handleCloseModal} typeIcon="Close" />
+        <S.Register onSubmit={handleSubmit(onSubmit)}>
+          <Input register={register} name="username" outline="1px solid #EEEEEE" placeholder="Введите ваше имя" />
+          <ButtonIcon background="transparent" border="transparent" hover="transparent" typeIcon="Close" />
         </S.Register>
       </Modal>
     </S.Container>

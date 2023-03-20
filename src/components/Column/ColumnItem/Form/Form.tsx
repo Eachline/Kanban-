@@ -18,7 +18,7 @@ export const Form: React.FC<IColumnForm> = ({ columnData }) => {
     defaultValues: { editColumn: columnData.title },
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: { editColumn: string }) => {
     dispatch(editColumn({ id: columnData.id, title: data.editColumn }));
     reset();
   };

@@ -46,7 +46,7 @@ export const CardUser = styled.div`
   gap: 8px;
 `;
 
-export const CardForm = styled.form<any>`
+export const CardForm = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;

@@ -22,7 +22,7 @@ export const CardItem: React.FC<ICardItem> = ({ cardData }) => {
     setToggleModalCard(false);
   };
 
-  const handleKeyModal = (e: any) => {
+  const handleKeyModal = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
       handleCloseModal();
     }

@@ -34,8 +34,8 @@ export const CommentBody = styled.div`
   word-wrap: break-word;
 `;
 
-export const CommentForm = styled.form<any>`
+export const CommentForm = styled.form`
   width: 100%;
 `;
 
-export const CommentText = styled.div<any>``;
+export const CommentText = styled.div``;

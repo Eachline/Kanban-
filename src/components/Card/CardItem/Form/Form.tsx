@@ -22,7 +22,7 @@ export const Form: React.FC<ICardForm> = ({ card }) => {
     defaultValues: { editCardTitle: card.title, editCardDescription: card.description },
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: { editCardTitle: string; editCardDescription: string }) => {
     dispatch(editCard({ id: card.id, _id: card._id, title: data.editCardTitle, description: data.editCardDescription }));
     reset();
   };

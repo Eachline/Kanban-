@@ -14,10 +14,13 @@ export interface IFormProps {
 }
 
 export const Form: React.FC<IFormProps> = ({ onClose, columnData }) => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset } = useForm({
+    shouldUnregister: true,
+    defaultValues: { cardTitle: '', cardDescription: '' },
+  });
   const dispatch = useAppDispatch();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: { cardTitle: string; cardDescription: string }) => {
     dispatch(addCard({ id: columnData.id, title: data.cardTitle, description: data.cardDescription }));
     onClose();
     reset();

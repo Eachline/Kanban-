@@ -9,9 +9,12 @@ import { addComment } from 'features/Column-Slice';
 import { useForm, Controller } from 'react-hook-form';
 
 export const CommentList: React.FC<ICommentList> = ({ cardData }) => {
-  const { handleSubmit, control, reset } = useForm();
+  const { handleSubmit, control, reset } = useForm({
+    shouldUnregister: true,
+    defaultValues: { comment: '' },
+  });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: { comment: string }) => {
     dispatch(addComment({ id: cardData.id, _id: cardData._id, comment: data.comment }));
     reset();
   };
