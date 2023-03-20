@@ -7,6 +7,7 @@ export type TInitialStateColumn = {
 }[];
 
 export type TCard = {
+  _id: string;
   id: string;
   title: string;
   description: string;
@@ -16,6 +17,7 @@ export type TCard = {
 };
 
 export type TComment = {
+  _id: string;
   id: string;
   author: string;
   edit: boolean;

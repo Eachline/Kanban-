@@ -7,8 +7,7 @@ import * as S from './StyleCardList';
 import { ICardList } from 'types/card/cardList';
 import { useKeyDown } from 'hook/useKeyDown';
 
-export const CardList: React.FC<ICardList> = ({ columnData, addCard, onDeleteCard, editCard, addComment, onDeleteComment, editComment }) => {
-  const { title, id, cards } = columnData;
+export const CardList: React.FC<ICardList> = ({ columnData }) => {
   const [modalAddCard, setModalAddCard] = useState(false);
 
   const handleOpenModal = () => {
@@ -33,21 +32,9 @@ export const CardList: React.FC<ICardList> = ({ columnData, addCard, onDeleteCar
         <span>Добавить карточку</span>
       </Button>
       <Modal onClick={handleOpenModal} showModal={modalAddCard}>
-        <Form title={title} columnIndex={id} onClick={addCard} onClose={handleCloseModal} />
+        <Form columnData={columnData} onClose={handleCloseModal} />
       </Modal>
-      {cards &&
-        cards.map((card) => (
-          <CardItem
-            key={card.id}
-            cardData={card}
-            onDeleteCard={onDeleteCard}
-            editCard={editCard}
-            addComment={addComment}
-            onDeleteComment={onDeleteComment}
-            editComment={editComment}
-            columnIndex={id}
-          />
-        ))}
+      {columnData.cards && columnData.cards.map((card) => <CardItem key={card.id} cardData={card} columnIndex={columnData.id} />)}
     </S.CardList>
   );
 };

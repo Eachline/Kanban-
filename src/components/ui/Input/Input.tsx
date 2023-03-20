@@ -6,12 +6,14 @@ export interface IInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLI
   color?: string;
   background?: string;
   placeholder?: string;
-  name?: string;
+  name: string;
   type?: string;
   value?: string;
+  register: any;
+  optionsForm?: { [key: string]: string };
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Input: React.FC<IInputProps> = ({ placeholder, name, type, value, onChange, ...props }) => {
-  return <S.Input placeholder={placeholder} name={name} type={type} value={value} onChange={onChange} {...props} />;
+export const Input: React.FC<IInputProps> = ({ placeholder, name, type, value, onChange, register, optionsForm, ...props }) => {
+  return <S.Input {...register(name, optionsForm)} placeholder={placeholder} name={name} type={type} value={value} onChange={onChange} {...props} />;
 };

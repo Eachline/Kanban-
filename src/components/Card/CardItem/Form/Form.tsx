@@ -4,26 +4,38 @@ import Input from 'components/ui/Input';
 import TextArea from 'components/ui/TextArea';
 import Button from 'components/ui/Button';
 import * as S from './StyleForm';
+import { useAppDispatch } from 'hook/useAppDispatch';
+import { editCard } from 'features/Column-Slice';
+import { useForm, Controller } from 'react-hook-form';
 
 export interface IForm {}
 
 export interface ICardForm {
-  valueArea: string;
-  valueInput: string;
   card: TCard;
-  columnIndex: string;
-  onClick: (id: string, columnId: string, column: TCard) => void;
-  onSubmit: (e: React.ChangeEvent<HTMLFormElement>) => void;
-  onChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeArea: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-export const Form: React.FC<ICardForm> = ({ onSubmit, valueInput, valueArea, onChangeInput, onChangeArea, onClick, columnIndex, card }) => {
+export const Form: React.FC<ICardForm> = ({ card }) => {
+  const dispatch = useAppDispatch();
+
+  const { register, handleSubmit, reset, control } = useForm({
+    shouldUnregister: true,
+    defaultValues: { editCardTitle: card.title, editCardDescription: card.description },
+  });
+
+  const onSubmit = (data: any) => {
+    dispatch(editCard({ id: card.id, _id: card._id, title: data.editCardTitle, description: data.editCardDescription }));
+    reset();
+  };
+
   return (
-    <S.CardForm onSubmit={onSubmit}>
-      <Input outline="1px solid #000" value={valueInput} onChange={onChangeInput} />
-      <TextArea height="130px" outline="1px solid #000" value={valueArea} onChange={onChangeArea} />
-      <Button onClick={() => onClick(columnIndex, card.id, card)}>Изменить</Button>
+    <S.CardForm onSubmit={handleSubmit(onSubmit)}>
+      <Input register={register} name="editCardTitle" outline="1px solid #000" />
+      <Controller
+        control={control}
+        name="editCardDescription"
+        render={({ field: { onChange, value } }) => <TextArea onChange={onChange} value={value} height="130px" outline="1px solid #000" />}
+      />
+      <Button>Изменить</Button>
     </S.CardForm>
   );
 };

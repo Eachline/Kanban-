@@ -11,12 +11,12 @@ export interface ITextArea {
   children?: React.ReactNode;
   value?: string;
   onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  onKeyDown?: (e: React.KeyboardEvent) => void;
+  field?: any;
 }
 
-export const TextArea: React.FC<ITextArea> = ({ placeholder, children, name, value, onChange, onKeyDown, ...rest }) => {
+export const TextArea: React.FC<ITextArea> = ({ placeholder, children, name, value, onChange, field, ...rest }) => {
   return (
-    <S.TextArea onKeyDown={onKeyDown} value={value} placeholder={placeholder} name={name} onChange={onChange} {...rest}>
+    <S.TextArea value={value} placeholder={placeholder} name={name} onChange={onChange} {...rest}>
       {children}
     </S.TextArea>
   );

@@ -20,12 +20,6 @@ export const ColumnInner = styled.div`
   justify-content: space-between;
 `;
 
-export const EditForm = styled.form<any>`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
 export const HeaderColumn = styled.div`
   width: 100%;
   display: flex;
