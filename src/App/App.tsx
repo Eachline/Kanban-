@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import * as S from './StyleApp';
-import { Input, ButtonIcon, Modal } from 'Common/components';
-import { ColumnList } from 'Features/components';
+import { Input, ButtonIcon, Modal } from 'Common/ui-components';
+import { ColumnList } from 'Features';
 import { useKeyDown } from 'Common/hook/useKeyDown';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from 'Common/hook/useAppDispatch';
-import { addAuthor } from 'Features/duck/Column-Slice';
-
+import { addAuthorColumn } from 'store/duck/Column-Slice';
 export const App: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean>(!localStorage.getItem('persist:column') ? true : false);
+
+  const dispatch = useAppDispatch();
 
   const { register, handleSubmit, reset } = useForm({
     shouldUnregister: true,
     defaultValues: { username: '' },
   });
-
-  const dispatch = useAppDispatch();
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -28,7 +27,7 @@ export const App: React.FC = () => {
   };
 
   const onSubmit = (data: { username: string }) => {
-    dispatch(addAuthor({ username: data.username }));
+    dispatch(addAuthorColumn({ username: data.username }));
     handleCloseModal();
     reset();
   };
