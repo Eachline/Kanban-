@@ -1,2 +1,2 @@
-import { TCard } from 'Features/typings/initialState';
+import { TCard } from 'Features/types/initialState';
 export const InitialStateCard: TCard[] = [];

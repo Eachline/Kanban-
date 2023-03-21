@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import App from 'App';
 import { Provider } from 'react-redux';
-import { store, persistor } from 'App/store';
+import { store, persistor } from 'store';
 import { PersistGate } from 'redux-persist/integration/react';
 const theme = {
   colors: {
