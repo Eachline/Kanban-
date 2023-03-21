@@ -1,9 +1,9 @@
 import React from 'react';
-import { Button, ButtonIcon, Input } from 'Common/components';
+import { Button, ButtonIcon, Input } from 'Common/ui-components';
 import * as S from './StyleForm';
 import { useAppDispatch } from 'Common/hook/useAppDispatch';
-import { TInitialStateColumn } from 'Features/typings/initialState';
-import { addCard } from 'Features/duck/Column-Slice';
+import { TInitialStateColumn } from 'Features/types/initialState';
+import { addCard } from 'store/duck/Card-Slice';
 import { useForm } from 'react-hook-form';
 
 export interface IFormProps {
@@ -12,14 +12,15 @@ export interface IFormProps {
 }
 
 export const Form: React.FC<IFormProps> = ({ onClose, columnData }) => {
+  const dispatch = useAppDispatch();
+
   const { register, handleSubmit, reset } = useForm({
     shouldUnregister: true,
     defaultValues: { cardTitle: '', cardDescription: '' },
   });
-  const dispatch = useAppDispatch();
 
   const onSubmit = (data: { cardTitle: string; cardDescription: string }) => {
-    dispatch(addCard({ id: columnData.id, title: data.cardTitle, description: data.cardDescription }));
+    dispatch(addCard({ columnId: columnData.id, title: data.cardTitle, description: data.cardDescription }));
     onClose();
     reset();
   };
