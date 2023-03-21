@@ -2,6 +2,7 @@ export interface IAddCardAction {
   columnId: string;
   title: string;
   description: string;
+  username: string;
 }
 
 export interface IToggleCardAction {

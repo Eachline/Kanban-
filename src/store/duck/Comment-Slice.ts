@@ -11,7 +11,7 @@ const commentSlice = createSlice({
       state.unshift({
         cardId: action.payload.cardId,
         id: newGuid(),
-        author: '',
+        author: action.payload.username,
         edit: false,
         comment: action.payload.comment,
       });

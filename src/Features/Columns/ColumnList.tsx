@@ -8,11 +8,13 @@ import { addColumn } from 'store/duck/Column-Slice';
 
 export const ColumnList: React.FC = () => {
   const columnList = useAppSelector((state) => state.column);
+  const userName = useAppSelector((state) => state.user);
+  console.log(userName);
   const dispatch = useAppDispatch();
 
   return (
     <S.Column>
-      <Button onClick={() => dispatch(addColumn())} width="100%">
+      <Button onClick={() => dispatch(addColumn({ username: userName.userName }))} width="100%">
         Добавить колонку
       </Button>
       {columnList && columnList.map((column) => <ColumnItem key={column.id} columnData={column} />)}

@@ -10,11 +10,11 @@ const columnSlice = createSlice({
     addAuthorColumn: (state, action: PayloadAction<IAddAuthorColumnAction>) => {
       state.map((column) => (column.author = action.payload.username));
     },
-    addColumn: (state) => {
+    addColumn: (state, action) => {
       state.unshift({
         id: newGuid(),
         title: 'Column name',
-        author: '',
+        author: action.payload.username,
         edit: false,
       });
     },

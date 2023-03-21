@@ -6,6 +6,7 @@ import { useKeyDown } from 'Common/hook/useKeyDown';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from 'Common/hook/useAppDispatch';
 import { addAuthorColumn } from 'store/duck/Column-Slice';
+import { userName } from 'store/duck/User-Slice';
 export const App: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean>(!localStorage.getItem('persist:column') ? true : false);
 
@@ -28,6 +29,7 @@ export const App: React.FC = () => {
 
   const onSubmit = (data: { username: string }) => {
     dispatch(addAuthorColumn({ username: data.username }));
+    dispatch(userName({ userName: data.username }));
     handleCloseModal();
     reset();
   };

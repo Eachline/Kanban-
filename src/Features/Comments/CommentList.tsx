@@ -10,6 +10,7 @@ import { useAppSelector } from 'Common/hook/useAppSelector';
 
 export const CommentList: React.FC<ICommentListProps> = ({ cardData }) => {
   const commentList = useAppSelector((state) => state.comment.filter((comment) => comment.cardId === cardData.id));
+  const userName = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
   const { handleSubmit, control, reset } = useForm({
@@ -18,7 +19,7 @@ export const CommentList: React.FC<ICommentListProps> = ({ cardData }) => {
   });
 
   const onSubmit = (data: { comment: string }) => {
-    dispatch(addComment({ cardId: cardData.id, comment: data.comment }));
+    dispatch(addComment({ cardId: cardData.id, comment: data.comment, username: userName.userName }));
     reset();
   };
 

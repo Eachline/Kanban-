@@ -5,11 +5,13 @@ import storage from 'redux-persist/lib/storage';
 import ColumnReducer from './duck/Column-Slice';
 import CardReducer from './duck/Card-Slice';
 import CommentReducer from './duck/Comment-Slice';
+import UserReducer from './duck/User-Slice';
 
 const rootReducer = combineReducers({
   column: ColumnReducer,
   card: CardReducer,
   comment: CommentReducer,
+  user: UserReducer,
 });
 
 const persistConfig = {

@@ -14,7 +14,7 @@ const cardSlice = createSlice({
         title: action.payload.title,
         description: action.payload.description,
         edit: false,
-        author: '',
+        author: action.payload.username,
       });
     },
     toggleCard: (state, action: PayloadAction<IToggleCardAction>) => {

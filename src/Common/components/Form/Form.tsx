@@ -5,6 +5,7 @@ import { useAppDispatch } from 'Common/hook/useAppDispatch';
 import { TInitialStateColumn } from 'Features/types/initialState';
 import { addCard } from 'store/duck/Card-Slice';
 import { useForm } from 'react-hook-form';
+import { useAppSelector } from 'Common/hook/useAppSelector';
 
 export interface IFormProps {
   onClose: () => void;
@@ -13,14 +14,14 @@ export interface IFormProps {
 
 export const Form: React.FC<IFormProps> = ({ onClose, columnData }) => {
   const dispatch = useAppDispatch();
-
+  const userName = useAppSelector((state) => state.user);
   const { register, handleSubmit, reset } = useForm({
     shouldUnregister: true,
     defaultValues: { cardTitle: '', cardDescription: '' },
   });
 
   const onSubmit = (data: { cardTitle: string; cardDescription: string }) => {
-    dispatch(addCard({ columnId: columnData.id, title: data.cardTitle, description: data.cardDescription }));
+    dispatch(addCard({ columnId: columnData.id, title: data.cardTitle, description: data.cardDescription, username: userName.userName }));
     onClose();
     reset();
   };

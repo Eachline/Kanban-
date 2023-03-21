@@ -1,6 +1,7 @@
 export interface IAddCommentAction {
   cardId: string;
   comment: string;
+  username: string;
 }
 
 export interface IToggleCommentAction {
