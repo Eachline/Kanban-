@@ -13,7 +13,7 @@ export const CardList: React.FC<ICardListProps> = ({ columnData }) => {
   const cardList = useAppSelector((state) => state.card.filter((card) => card.columnId === columnData.id));
 
   const handleOpenModal = () => {
-    setModalAddCard((prevState) => !prevState);
+    setModalAddCard(true);
   };
 
   const handleCloseModal = () => {
@@ -33,7 +33,7 @@ export const CardList: React.FC<ICardListProps> = ({ columnData }) => {
       <Button onClick={handleOpenModal} background="#fff" hover="#eee" width="100%">
         <span>Добавить карточку</span>
       </Button>
-      <Modal onClick={handleOpenModal} showModal={modalAddCard}>
+      <Modal onClick={handleCloseModal} showModal={modalAddCard}>
         <Form columnData={columnData} onClose={handleCloseModal} />
       </Modal>
       {cardList && cardList.map((card) => <CardItem key={card.id} cardData={card} columnIndex={columnData.id} />)}

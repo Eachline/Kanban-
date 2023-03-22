@@ -41,7 +41,7 @@ export const Form: React.FC<IFormProps> = ({ onClose, columnData }) => {
     <S.Form onSubmit={handleSubmit(onSubmit)}>
       <S.HeaderForm>
         <S.HeaderTitle>{columnData.title}</S.HeaderTitle>
-        <ButtonIcon background="transparent" border="transparent" hover="transparent" onClick={onClose} typeIcon="Close" />
+        <ButtonIcon typeButton="button" background="transparent" border="transparent" hover="transparent" onClick={onClose} typeIcon="Close" />
       </S.HeaderForm>
       <S.FieldList>
         <Controller

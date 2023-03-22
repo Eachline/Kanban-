@@ -11,8 +11,6 @@ export const ColumnList: React.FC = () => {
   const userName = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
-  console.log(columnList);
-
   return (
     <S.Column>
       <Button onClick={() => dispatch(addColumn({ username: userName.userName }))} width="100%">
