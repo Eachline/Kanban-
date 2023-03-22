@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { newGuid } from 'Common/utils/guid';
 import { InitialStateComment } from 'Features/api';
-import { IAddCommentAction, IToggleCommentAction, IEditCommentAction, IRemoveCommentAction } from './Comment.interface';
+import { IAddCommentAction, IToggleCommentAction, IEditCommentAction, IRemoveCommentAction } from './Comment-interface';
 
 const commentSlice = createSlice({
   name: '@@comment',

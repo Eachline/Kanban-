@@ -22,3 +22,19 @@ export const Input: any = styled.input<IStyledInput>`
     outline: 2px solid #${(props) => props.outline || 'white'};
   }
 `;
+
+export const InnerInput = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+export const Error = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: red;
+`;

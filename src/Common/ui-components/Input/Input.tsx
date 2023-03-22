@@ -9,11 +9,18 @@ export interface IInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLI
   name: string;
   type?: string;
   value?: string;
-  register: any;
-  optionsForm?: { [key: string]: string };
+  register?: any;
+  error?: any;
+  optionsForm?: { [key: string]: unknown };
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Input: React.FC<IInputProps> = ({ placeholder, name, type, value, onChange, register, optionsForm, ...props }) => {
-  return <S.Input {...register(name, optionsForm)} placeholder={placeholder} name={name} type={type} value={value} onChange={onChange} {...props} />;
+export const Input: React.FC<IInputProps> = ({ placeholder, name, type, value, onChange, register, optionsForm, error, ...props }) => {
+  console.log('error', error);
+  return (
+    <S.InnerInput>
+      <S.Input {...register(name, optionsForm)} placeholder={placeholder} name={name} type={type} value={value} onChange={onChange} {...props} />
+      {error?.[name] && <S.Error>{error?.[name]?.message && error?.[name]?.message}</S.Error>}
+    </S.InnerInput>
+  );
 };

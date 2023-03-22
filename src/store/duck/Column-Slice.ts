@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { newGuid } from 'Common/utils/guid';
 import { InitialStateColumn } from 'Features/api';
-import { IAddAuthorColumnAction, IEditColumnAction, IRemoveColumnAction, IToggleColumnAction } from './Column.interface';
+import { IAddAuthorColumnAction, IEditColumnAction, IRemoveColumnAction, IToggleColumnAction } from './Column-interface';
 
 const columnSlice = createSlice({
   name: '@@column',

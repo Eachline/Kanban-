@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { newGuid } from 'Common/utils/guid';
 import { InitialStateCard } from 'Features/api';
-import { IAddCardAction, IEditCardAction, IRemoveCardAction, IToggleCardAction } from './Card.interface';
+import { IAddCardAction, IEditCardAction, IRemoveCardAction, IToggleCardAction } from './Card-interface';
 
 const cardSlice = createSlice({
   name: '@@card',

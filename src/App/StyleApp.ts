@@ -10,7 +10,7 @@ export const Container = styled.div`
 export const Register = styled.form`
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 30px;
 `;
