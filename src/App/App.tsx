@@ -52,7 +52,7 @@ export const App: React.FC = () => {
   return (
     <S.Container>
       <ColumnList />
-      <Modal showModal={showModal} onClick={handleCloseModal}>
+      <Modal showModal={showModal}>
         <S.Register onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="username"

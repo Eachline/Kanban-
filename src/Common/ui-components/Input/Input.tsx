@@ -16,7 +16,6 @@ export interface IInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLI
 }
 
 export const Input: React.FC<IInputProps> = ({ placeholder, name, type, value, onChange, register, optionsForm, error, ...props }) => {
-  console.log('error', error);
   return (
     <S.InnerInput>
       <S.Input {...register(name, optionsForm)} placeholder={placeholder} name={name} type={type} value={value} onChange={onChange} {...props} />
